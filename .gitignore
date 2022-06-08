@@ -1,5 +1,9 @@
 # Prerequisites
 *.d
+CPPLINT.cfg
+bytes.txt
+t_cat.sh
+text.txt
 
 # Object files
 *.o

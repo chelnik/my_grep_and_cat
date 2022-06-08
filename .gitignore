@@ -4,6 +4,7 @@ CPPLINT.cfg
 bytes.txt
 t_cat.sh
 text.txt
+.DS_Store
 
 # Object files
 *.o

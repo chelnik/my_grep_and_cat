@@ -1,4 +1,5 @@
 Реализация утилиты grep и cat в папках src/grep и src/cat 
+![simple_bash_utils](misc/rus/images/linux.jpeg)
 
 | № | Опции | Описание |
 | ------ | ------ | ------ |

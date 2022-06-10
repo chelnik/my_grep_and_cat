@@ -81,7 +81,7 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST6="-f pattern.txt s21_grep.c Makefile $var $var2"
+          TEST6="-f pattern_for_tests.txt s21_grep.c Makefile $var $var2"
           echo "$TEST6"
           ./s21_grep $TEST6 > s21_grep.txt
           grep $TEST6 > grep.txt

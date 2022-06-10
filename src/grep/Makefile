@@ -17,6 +17,7 @@ check:
 clean:
 	rm -rf s21_grep
 	rm -rf res1 res2
+	rm log.txt
 pyt:
 	python3 ../../materials/linters/cpplint.py --extensions=c *.c *.h
 

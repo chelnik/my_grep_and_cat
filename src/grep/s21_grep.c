@@ -97,7 +97,7 @@ void parser(int argc, char const *argv[], flags flags) {
             }
         } else {
             if (flags.there_are_ef_flags) {
-                    files[num_files++] = argv[i];
+                files[num_files++] = argv[i];
             } else {
                 // конструкция что бы забирать файлы
                 if (!flag_for_take_file) {
@@ -108,7 +108,7 @@ void parser(int argc, char const *argv[], flags flags) {
                         flag_for_take_file = 1;
                     }
                 } else {
-                        files[num_files++] = argv[i];
+                    files[num_files++] = argv[i];
                 }
             }
         }
@@ -174,24 +174,7 @@ void worker(const char **files, int num_files, const char **template,
 
                     if (flags.l) {
                         if (value == 0 || (value == REG_NOMATCH && flags.v)) {
-                            if (num_files > 1) {
-                                if (flags.c) {
-                                    if (flags.h) {
-                                        printf("1\n%s\n", files[m]);
-                                    } else {
-                                        printf("%s:1\n%s\n", files[m],
-                                               files[m]);
-                                    }
-                                } else {
-                                    printf("%s\n", files[m]);
-                                }
-                            } else {
-                                if (flags.c) {
-                                    printf("1\n%s\n", files[m]);
-                                } else {
-                                    printf("%s\n", files[m]);
-                                }
-                            }
+                            function_for_flag_l(m, files, num_files, flags);
                             // выходит из цикла while
                             goodbye = 1;
                             // break;
@@ -208,28 +191,8 @@ void worker(const char **files, int num_files, const char **template,
                     } else if (flags.o && !flags.v && !flags.l && !flags.c &&
                                value == 0) {
                         // Для флага о
-                        if (flags.n) {
-                            if (num_files > 1) {
-                                if (flags.h) {
-                                    printf("%d:%s\n", str_index, template[num]);
-                                } else {
-                                    printf("%s:%d:%s\n", files[m], str_index,
-                                           template[num]);
-                                }
-                            } else {
-                                printf("%d:%s\n", str_index, template[num]);
-                            }
-                        } else {
-                            if (num_files > 1) {
-                                if (flags.h) {
-                                    printf("%s\n", template[num]);
-                                } else {
-                                    printf("%s:%s\n", files[m], template[num]);
-                                }
-                            } else {
-                                printf("%s\n", template[num]);
-                            }
-                        }
+                        function_for_flag_o(num, template, str_index, m, files,
+                                            num_files, flags);
 
                         // ---
                     } else {
@@ -315,3 +278,12 @@ void worker(const char **files, int num_files, const char **template,
         }
     }
 }
+
+void parser(int argc, char const *argv[], flags flags);
+void worker(const char **files, int num_files, const char **template,
+            int num_template, flags flags);
+void template_files_opener(const char **template_files, int num_template_files,
+                           const char **template, int *num_template,
+                           flags flags, char **str_array);
+void cheker_flags_ef(int argc, char const *argv[], flags *flags);
+void enter_flager(int *enter_flag, char *buf, flags flags);

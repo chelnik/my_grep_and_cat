@@ -29,5 +29,7 @@ void template_files_opener(const char **template_files, int num_template_files,
 void cheker_flags_ef(int argc, char const *argv[], flags *flags);
 void enter_flager(int *enter_flag, char *buf, flags flags);
 
-
+void function_for_flag_l(int m, const char **files, int num_files, flags flags);
+void function_for_flag_o(int num, const char **template, int str_index, int m,
+                         const char **files, int num_files, flags flags);
 #endif  // SRC_GREP_S21_GREP_H_

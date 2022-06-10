@@ -48,3 +48,48 @@ void enter_flager(int *enter_flag, char *buf, flags flags) {
         if (flags.c == 0 && flags.l == 0) *enter_flag = 1;
     }
 }
+
+void function_for_flag_l(int m, const char **files, int num_files, flags flags) {
+    if (num_files > 1) {
+        if (flags.c) {
+            if (flags.h) {
+                printf("1\n%s\n", files[m]);
+            } else {
+                printf("%s:1\n%s\n", files[m], files[m]);
+            }
+        } else {
+            printf("%s\n", files[m]);
+        }
+    } else {
+        if (flags.c) {
+            printf("1\n%s\n", files[m]);
+        } else {
+            printf("%s\n", files[m]);
+        }
+    }
+}
+
+void function_for_flag_o(int num, const char **template, int str_index, int m,
+                         const char **files, int num_files, flags flags) {
+    if (flags.n) {
+        if (num_files > 1) {
+            if (flags.h) {
+                printf("%d:%s\n", str_index, template[num]);
+            } else {
+                printf("%s:%d:%s\n", files[m], str_index, template[num]);
+            }
+        } else {
+            printf("%d:%s\n", str_index, template[num]);
+        }
+    } else {
+        if (num_files > 1) {
+            if (flags.h) {
+                printf("%s\n", template[num]);
+            } else {
+                printf("%s:%s\n", files[m], template[num]);
+            }
+        } else {
+            printf("%s\n", template[num]);
+        }
+    }
+}

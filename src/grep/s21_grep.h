@@ -32,4 +32,8 @@ void enter_flager(int *enter_flag, char *buf, flags flags);
 void function_for_flag_l(int m, const char **files, int num_files, flags flags);
 void function_for_flag_o(int num, const char **template, int str_index, int m,
                          const char **files, int num_files, flags flags);
+
+void function_for_flag_n(int m, int num_files, int str_index,
+                         const char **files, char *buf, int *enter_flag,
+                         flags flags);
 #endif  // SRC_GREP_S21_GREP_H_

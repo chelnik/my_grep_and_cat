@@ -11,7 +11,7 @@ s21_grep:
 	$(CC) -D_GNU_SOURCE $(СFLAGS) $(SRC) -o s21_grep
 
 test: all 
-	s21_grep -f text.txt s21_grep.c
+	sh tests.sh
 check:
 	cppcheck --enable=all --suppress=missingIncludeSystem *.c *.h
 clean:

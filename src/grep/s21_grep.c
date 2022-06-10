@@ -182,68 +182,28 @@ void worker(const char **files, int num_files, const char **template,
                     } else if (flags.c) {
                         if (value == 0 && !flags.v) {
                             number_of_matching_rows++;
-                            break;
                             // Инвертирует смысл поиска соответствий.
                         } else if (value == REG_NOMATCH && flags.v) {
                             number_of_matching_rows++;
-                            break;
                         }
+                        break;
                     } else if (flags.o && !flags.v && !flags.l && !flags.c &&
                                value == 0) {
                         // Для флага о
                         function_for_flag_o(num, template, str_index, m, files,
                                             num_files, flags);
-
                         // ---
                     } else {
                         // базовый случай вывода
                         // ==============================================
                         if ((flags.v && value == REG_NOMATCH) ||
                             (!flags.v && value == 0)) {
-                            // номер строки
-                            if (flags.n) {
-                                // для нескольких файлов
-                                if (num_files > 1) {
-                                    if (flags.h) {
-                                        printf("%d:%s", str_index, buf);
-                                        enter_flager(&enter_flag, buf, flags);
-                                        break;
-                                    } else {
-                                        printf("%s:%d:%s", files[m], str_index,
-                                               buf);
-                                        enter_flager(&enter_flag, buf, flags);
-                                        break;
-                                    }
-
-                                } else {
-                                    // базовый случай вывода
-                                    printf("%d:%s", str_index, buf);
-                                    enter_flager(&enter_flag, buf, flags);
-                                    break;
-                                }
-                            } else {
-                                if (num_files > 1) {
-                                    if (flags.h) {
-                                        printf("%s", buf);
-                                        enter_flager(&enter_flag, buf, flags);
-                                        break;
-                                    } else {
-                                        printf("%s:%s", files[m], buf);
-                                        enter_flager(&enter_flag, buf, flags);
-                                        break;
-                                    }
-                                } else {
-                                    // базовый случай вывода
-                                    printf("%s", buf);
-                                    enter_flager(&enter_flag, buf, flags);
-                                    break;
-                                }
-                            }
-
+                            function_for_flag_n(m, num_files, str_index, files,
+                                                buf, &enter_flag, flags);
+                            break;
                         } else if (flags.v) {
                             // для случая v flag когда перебирается много
                             // шаблонов
-                            // вместо else сделал if (flags.v)
                             break;
                         }
                     }
@@ -279,6 +239,9 @@ void worker(const char **files, int num_files, const char **template,
     }
 }
 
+void function_for_flag_l(int m, const char **files, int num_files, flags flags);
+void function_for_flag_o(int num, const char **template, int str_index, int m,
+                         const char **files, int num_files, flags flags);
 void parser(int argc, char const *argv[], flags flags);
 void worker(const char **files, int num_files, const char **template,
             int num_template, flags flags);

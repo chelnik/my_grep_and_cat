@@ -1,5 +1,5 @@
 #include "s21_grep.h"
-
+// открывает файл с шаблонами для поиска
 void template_files_opener(const char **template_files, int num_template_files,
                            const char **template, int *num_template,
                            flags flags, char **str_array) {
@@ -34,7 +34,7 @@ void template_files_opener(const char **template_files, int num_template_files,
         }
     }
 }
-
+// проверяет есть ли флаг е или f
 void cheker_flags_ef(int argc, char const *argv[], flags *flags) {
     for (int i = 0; i < argc; i++) {
         if (argv[i][0] == '-' && (argv[i][1] == 'e' || argv[i][1] == 'f')) {
@@ -42,14 +42,15 @@ void cheker_flags_ef(int argc, char const *argv[], flags *flags) {
         }
     }
 }
-
+//  проверяет конец строки и если конец и нет переноса строки, то добавляет его
 void enter_flager(int *enter_flag, char *buf, flags flags) {
     if (buf[strlen(buf) - 1] == EOF || buf[strlen(buf) - 1] != '\n') {
         if (flags.c == 0 && flags.l == 0) *enter_flag = 1;
     }
 }
 
-void function_for_flag_l(int m, const char **files, int num_files, flags flags) {
+void function_for_flag_l(int m, const char **files, int num_files,
+                         flags flags) {
     if (num_files > 1) {
         if (flags.c) {
             if (flags.h) {
@@ -90,6 +91,43 @@ void function_for_flag_o(int num, const char **template, int str_index, int m,
             }
         } else {
             printf("%s\n", template[num]);
+        }
+    }
+}
+
+// важное замечание этой функциии это то чтоесли мы приняли указатель то мы
+// можем передавать его и это удобно
+void function_for_flag_n(int m, int num_files, int str_index,
+                         const char **files, char *buf, int *enter_flag,
+                         flags flags) {
+    // для нескольких файлов
+    if (flags.n) {
+        if (num_files > 1) {
+            if (flags.h) {
+                printf("%d:%s", str_index, buf);
+                enter_flager(enter_flag, buf, flags);
+            } else {
+                printf("%s:%d:%s", files[m], str_index, buf);
+                enter_flager(enter_flag, buf, flags);
+            }
+        } else {
+            // базовый случай вывода
+            printf("%d:%s", str_index, buf);
+            enter_flager(enter_flag, buf, flags);
+        }
+    } else {
+        if (num_files > 1) {
+            if (flags.h) {
+                printf("%s", buf);
+                enter_flager(enter_flag, buf, flags);
+            } else {
+                printf("%s:%s", files[m], buf);
+                enter_flager(enter_flag, buf, flags);
+            }
+        } else {
+            // базовый случай вывода
+            printf("%s", buf);
+            enter_flager(enter_flag, buf, flags);
         }
     }
 }
